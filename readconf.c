@@ -829,7 +829,7 @@ by avoiding using exec "..." to start a shell to do simple matching of tokens.
         hostkeyalias            %k      The host key alias if specified,
                                         otherwise the original remote hostname given on the command line.
 
-        shortlocalhost          %L      The local hostname.
+        shortlocalhost          %L      The local hostname without domain name.a
 
         locahost                %l      The local hostname, including the domain name.
 
@@ -843,6 +843,8 @@ DONE    localuser               %u      The local username.
 
         proxyjump               %j      The contents of the ProxyJump option,
                                         or the empty string if this option is unset.
+
+        shortremotehost          x      The remote hostname without domain name.
 
                 } else if (strcasecmp(attrib, "home") == 0) {
                 } else if (strcasecmp(attrib, "uid") == 0) {
@@ -1017,6 +1019,10 @@ TOKENS
                         if (r == (negate ? 1 : 0))
                                 this_result = result = 0;
                 } else if (strcasecmp(attrib, "hostkeyalias") == 0) {
+                        r = match_pattern_list(???, arg, 0) == 1;
+                        if (r == (negate ? 1 : 0))
+                                this_result = result = 0;
+                } else if (strcasecmp(attrib, "shorthost") == 0) {
                         r = match_pattern_list(???, arg, 0) == 1;
                         if (r == (negate ? 1 : 0))
                                 this_result = result = 0;
